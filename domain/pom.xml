@@ -6,7 +6,7 @@
     <artifactId>domain</artifactId>
 
     <parent>
-        <groupId>com.abhinav</groupId>
+        <groupId>com.myGroupId</groupId>
         <artifactId>hexagonal-architecture</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>

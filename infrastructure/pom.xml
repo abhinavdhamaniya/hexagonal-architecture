@@ -6,7 +6,7 @@
     <artifactId>infrastructure</artifactId>
 
     <parent>
-        <groupId>com.abhinav</groupId>
+        <groupId>com.myGroupId</groupId>
         <artifactId>hexagonal-architecture</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
@@ -16,6 +16,19 @@
         <maven.compiler.target>20</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.myGroupId</groupId>
+            <artifactId>domain</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+    </dependencies>
 
     <build>
         <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
