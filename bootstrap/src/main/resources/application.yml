@@ -10,3 +10,7 @@ spring:
       idle-timeout: 300000
       minimum-idle: 1
       maximum-pool-size: 5
+
+feign:
+  company.url: https://fakerapi.it/
+  address.url: https://fakerapi.it/

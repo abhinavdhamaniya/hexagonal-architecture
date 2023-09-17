@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping
 
 @FeignClient(
     name = "company",
-    url = "https://fakerapi.it/"
+    url = "\${feign.company.url}"
 )
 interface CompanyFeignClient {
 
