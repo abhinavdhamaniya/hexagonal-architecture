@@ -4,17 +4,16 @@ import com.hexagonalArchitecture.book.Book
 import com.hexagonalArchitecture.book.exception.BookNotFoundException
 import com.hexagonalArchitecture.book.repository.BookRepository
 import com.hexagonalArchitecture.repository.mapper.BookMapper
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Repository
 import java.util.*
 
 @Repository
-class BookRepositoryAdapter(private val mapper: BookMapper) : BookRepository {
-
-    @Autowired
-    private lateinit var jdbcTemplate: JdbcTemplate
+class BookRepositoryAdapter(
+    private val jdbcTemplate: JdbcTemplate,
+    private val mapper: BookMapper
+) : BookRepository {
 
     private val insertQuery = "INSERT INTO BOOK VALUES(?, ?, ?, ?)"
     private val findByIdQuery = "SELECT * FROM BOOK WHERE ID = ?"
