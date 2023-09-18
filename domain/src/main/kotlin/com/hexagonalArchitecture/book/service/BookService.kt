@@ -16,7 +16,7 @@ class BookService(
     }
 
     fun getAllBooks(): List<Book> {
-        return repository.findAll().onEach {processor.onRead(it)}
+        return repository.findAll().onEach { processor.onRead(it) }
     }
 
     fun createBook(command: CreateBookCommand): Book {
