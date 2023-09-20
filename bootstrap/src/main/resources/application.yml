@@ -10,6 +10,36 @@ spring:
       idle-timeout: 300000
       minimum-idle: 1
       maximum-pool-size: 5
+  rabbitmq:
+    addresses: localhost:5672           # default address
+    username: guest                     # default username
+    password: guest                     # default password
+
+  cloud:
+    function:
+      definition: bookConsumer; novelConsumer         # This is important! Names of all consumer beans are provided here, semicolon separated (space is allowed)
+    stream:
+      bindings:
+        bookProducer-out-0:                           # This is the output channel name mentioned in BookProducerAdapter
+          destination: live.hexagonal-architecture    # This is exchange name (Producer -> Exchange -> (Matching routing key) -> Queue -> Consumer)
+          content-type: application/json
+        bookConsumer-in-0:
+          destination: live.hexagonal-architecture    # Exchange name (Keep it same as producer)
+          content-type: application/json
+          group: book.queue                           # this is queue name (Complete queue name will be live.hexagonal-architecture.book.queue)
+        novelConsumer-in-0:
+          destination: live.hexagonal-architecture
+          content-type: application/json
+          group: novel.queue
+      rabbit:
+        default:
+          autoBindDlq: true
+          republishToDlq: true
+        bindings:
+          bookProducer-out-0.producer.routingKeyExpression: "'hexagonal-architecture.book.key'"     # Single quotes are required inside double quotes since it's an expression
+          bookConsumer-in-0.consumer.bindingRoutingKey: "hexagonal-architecture.book.key"
+          novelConsumer-in-0.consumer.bindingRoutingKey: "hexagonal-architecture.book.key"
+
 
 feign:
   company.url: https://fakerapi.it/
