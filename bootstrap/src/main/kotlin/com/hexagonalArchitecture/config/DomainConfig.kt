@@ -2,11 +2,14 @@ package com.hexagonalArchitecture.config
 
 import com.hexagonalArchitecture.address.provider.AddressProvider
 import com.hexagonalArchitecture.book.processor.BookProcessor
+import com.hexagonalArchitecture.book.producer.BookProducer
 import com.hexagonalArchitecture.book.repository.BookRepository
 import com.hexagonalArchitecture.book.service.BookService
 import com.hexagonalArchitecture.company.provider.CompanyProvider
 import com.hexagonalArchitecture.feign.address.adapter.AddressAdapter
 import com.hexagonalArchitecture.feign.company.adapter.CompanyAdapter
+import com.hexagonalArchitecture.messaging.producer.book.BookProducerAdapter
+import org.springframework.cloud.stream.function.StreamBridge
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
@@ -20,6 +23,9 @@ class DomainConfig {
     fun addressProvider() = AddressAdapter()
 
     @Bean
+    fun bookProducer(streamBridge: StreamBridge) = BookProducerAdapter(streamBridge)
+
+    @Bean
     fun processor(
         companyProvider: CompanyProvider,
         addressProvider: AddressProvider
@@ -28,6 +34,7 @@ class DomainConfig {
     @Bean
     fun bookService(
         repository: BookRepository,
-        processor: BookProcessor
-    ) = BookService(repository, processor)
+        processor: BookProcessor,
+        bookProducer: BookProducer
+    ) = BookService(repository, processor, bookProducer)
 }

@@ -7,10 +7,12 @@ import com.hexagonalArchitecture.restApi.request.BookRequest
 import com.hexagonalArchitecture.restApi.response.BooksResponse
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RestController
-import java.util.UUID
+import java.util.*
 
 @RestController
-class BookController (private val service: BookService) : BookApi {
+class BookController(
+    private val service: BookService
+) : BookApi {
     override fun getBookById(id: UUID): ResponseEntity<Book> {
         return ResponseEntity.ok(service.getBookById(id))
     }
@@ -21,5 +23,9 @@ class BookController (private val service: BookService) : BookApi {
 
     override fun createBook(request: BookRequest): ResponseEntity<Book> {
         return ResponseEntity.ok(service.createBook(request.toCommand()))
+    }
+
+    override fun createBookByProducer(request: BookRequest): ResponseEntity<Book> {
+        return ResponseEntity.ok(service.createBookByPublisher(request.toCommand()))
     }
 }

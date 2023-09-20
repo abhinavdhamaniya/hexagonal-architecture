@@ -44,4 +44,13 @@ interface BookApi {
         operationId = "CreateBook"
     )
     fun createBook(@RequestBody request: BookRequest): ResponseEntity<Book>
+
+    @PostMapping("/by-producer")
+    @Operation(
+        method = "POST",
+        summary = "Create book by publisher",
+        description = "Create book by publisher",
+        operationId = "CreateBookByPublisher"
+    )
+    fun createBookByProducer(@RequestBody request: BookRequest): ResponseEntity<Book>
 }
